@@ -8,6 +8,7 @@
 <ul>	
 <li>{{$student->name}}</li>
 <li>{{$student->classroom->title}}</li>
+<h1>lorem</h1>
 
 </ul>
 
