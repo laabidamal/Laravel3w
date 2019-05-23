@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\DB;
 use App\Classroom;
 use App\Student;
+
 
 class TestController extends Controller
 {
@@ -46,12 +48,7 @@ public function showAddStudent(){
 public function handleAddStudent()
 {
 $data=Input::all();
-student::create([
-	'name'=>$data['name'],
-	'email'=>$data['email'],
-	'password'=> bcrypt($data['password']),
-	'classroom_id'=>$data['classroom'],
-]);
+
 
 }
 
@@ -79,6 +76,42 @@ public function showViewStudent($id){
 }
 
 
+public function showUpdateStudent($id){
+
+$student=Student::find($id);
+if($student){
+
+   $classroom =Classroom::all();
+
+	return view('student.update',['student'=>$student,'classrooms'=>$classroom]);
+
+}else
+
+return 'erreur';
+
+}
 
 
+public function handeleUpdateStudent($id){
+
+     $student=Student::find($id);
+
+     $data=Input::all();      
+     if($student){     
+      /*$student->name=$data["name"];
+
+     $student->email=$data["email"];
+
+     $student->classroom_id=$data["classroom_id"];     
+      $student->save();*/
+
+       $s=DB::table("student")->where('id','=',$id)->update(['name'=>$data["name"],
+
+        'email'=>$data["email"],
+
+           
+     ]);
+
+}
+}
 }
